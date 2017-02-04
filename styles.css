@@ -1,0 +1,33 @@
+/* You can add global styles to this file, and also import other style files */
+/*@import './lib/normalize.css';*/
+@import './lib/foundation.css';
+
+body {
+	background-image: url('assets/woodpaneling.jpg');
+	background-repeat: repeat-x;
+	background-attachment: fixed;
+	background-size: auto 100%;
+}
+
+#header {
+	background-color: #e6e6e6;
+}
+#preheader h4 {
+	margin-left: 3%;
+}
+
+#header {
+	background-color: #e6e6e6;
+}
+
+.storeItem {
+	margin-bottom: 0.5em;
+}
+
+.button {
+	background-color: #244B69;
+}
+.button:hover,
+.button:focus {
+	background-color: #21394D;
+}

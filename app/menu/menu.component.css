@@ -1,0 +1,48 @@
+#header {
+	position: fixed;
+	top: 0;
+	right: 0;
+	left: 0;
+	background-image: url('assets/woodpaneling.jpg');
+	background-repeat: repeat-x;
+	background-attachment: fixed;
+	background-size: auto 100%;
+}
+.down {
+	margin-top: 203px;
+}
+.noResults {
+	margin-top: 102px;
+}
+
+#banner,
+#search {
+	background-color: #82181F;
+    color: #E6E5DC;
+}
+#banner h3,
+#banner h4 {
+	display: inline-block;
+}
+#banner h4 {
+	color: #E6E5DC;
+}
+
+.button,
+input {
+	margin: 0.3rem 0 0.3rem 0;
+}
+
+.menuItem h3 {
+	padding: 1rem;
+	background-color: #82181F;
+    color: #E6E5DC;
+}
+.storeItem .card {
+	background-color: #E6E6E1;
+	border: 0;
+}
+.storeItem .card-divider {
+	background-color: #82181F;
+    color: #E6E5DC;
+}

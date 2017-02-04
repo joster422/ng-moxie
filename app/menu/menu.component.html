@@ -1,0 +1,77 @@
+<div id="header" class="row show" *ngIf="show">
+    <div id="banner" class="row column">
+        <div class="small-7 column">
+            <h3>
+                Moxie's Joint
+            </h3>
+            <h4>
+                Cafe' &amp; Grille
+            </h4>
+        </div>
+        <nav class="small-5 column">
+            <div class="row">
+                <div class="small-6 column">
+                    <a class="button expanded" routerLink="/menu">
+                        Menu
+                    </a>
+                </div>
+                <div class="small-6 column">
+                    <a class="button expanded" routerLink="/contact">
+                        Contact
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div id="search" class="row column">
+        <h3 class="small-3 column">
+            Menu
+        </h3>
+        <div class="small-9 medium-7 large-5 column">
+            <input type="search"
+                [(ngModel)]="term"
+                (ngModelChange)="termChange()"
+                placeholder="Search the menu! Ex. chicken, wrap, slaw" />
+        </div>
+    </div>
+
+    <div id="nav" class="row column small-up-2 medium-up-3">
+        <div class="column" *ngFor="let item of menu; let i = index;">
+            <a class="button expanded" (click)="subheaderClick(i)">
+                {{item.title}}
+            </a>
+        </div>
+    </div>
+</div>
+
+<div id="menu" class="row" [ngClass]="{'down': show == true, 'noResults': menu.length == 0}">
+    <div id="{{i}}" class="menuItem row column" *ngFor="let item of menu; let i = index;">
+        <h3 class="small-12 column">
+            {{item.title}}
+        </h3>
+        <div class="small-12 column row medium-up-2 large-up-3">
+            <div class="storeItem column column-block" *ngFor="let storeItem of item.store" >
+                <div class="card">
+                    <h4 class="card-divider">
+                        {{storeItem.title}}
+                    </h4>
+                    <div class="card-section" *ngIf="storeItem.text">
+                        {{storeItem.text}}
+                    </div>
+                    <div class="card-divider">
+                        ${{storeItem.cost}}
+                    </div>  
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="menu.length === 0">
+    <div class="small-small-12 column">
+        <a class="button expanded"  (click)="term = ''; termChange()">
+            No search results! Please clear the search filter
+        </a>
+    </div>
+</div>
