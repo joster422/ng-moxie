@@ -38,11 +38,11 @@ input {
 	background-color: #82181F;
     color: #E6E5DC;
 }
-.storeItem .card {
+.card {
 	background-color: #E6E6E1;
 	border: 0;
 }
-.storeItem .card-divider {
+.card-divider {
 	background-color: #82181F;
     color: #E6E5DC;
 }

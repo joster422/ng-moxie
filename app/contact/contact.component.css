@@ -1,0 +1,33 @@
+#banner,
+#contact {
+	background-color: #82181F;
+    color: #FEFEFE;
+}
+#banner h3,
+#banner h4 {
+	display: inline-block;
+}
+#banner h4 {
+	color: #FEFEFE;
+}
+
+.button,
+input {
+	margin: 0.3rem 0 0.3rem 0;
+}
+
+#details {
+    margin-top: 1rem;
+}
+.card {
+	background-color: #FEFEFE;
+	border: 0;
+}
+.card-divider {
+	background-color: #82181F;
+    color: #FEFEFE;
+}
+
+#map .card {
+    margin-bottom: 0;
+}
