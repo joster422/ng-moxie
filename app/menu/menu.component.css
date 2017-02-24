@@ -7,25 +7,20 @@
 	background-repeat: repeat-x;
 	background-attachment: fixed;
 	background-size: auto 100%;
-}
-.down {
-	margin-top: 203px;
-}
-.noResults {
-	margin-top: 102px;
+	z-index: 1;
 }
 
 #banner,
 #search {
 	background-color: #82181F;
-    color: #E6E5DC;
+    color: #FEFEFE;
 }
 #banner h3,
 #banner h4 {
 	display: inline-block;
 }
 #banner h4 {
-	color: #E6E5DC;
+	color: #FEFEFE;
 }
 
 .button,
@@ -36,13 +31,18 @@ input {
 .menuItem h3 {
 	padding: 1rem;
 	background-color: #82181F;
-    color: #E6E5DC;
+    color: #FEFEFE;
 }
 .card {
-	background-color: #E6E6E1;
+	background-color: #FEFEFE;
 	border: 0;
 }
 .card-divider {
 	background-color: #82181F;
-    color: #E6E5DC;
+    color: #FEFEFE;
+	display: flex;
+	justify-content: space-between;
+}
+.card-divider>h4 {
+	margin-right: 10px;
 }

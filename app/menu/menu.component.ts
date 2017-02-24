@@ -1,71 +1,100 @@
-import { Component, 
-  OnInit, 
-  Input, 
+import { Component,
+  OnInit,
   trigger, 
   animate, 
   transition, 
   style, 
   state,
-  Renderer} from '@angular/core';
-import { MenuService } from './menu.service';
+  keyframes,
+  HostListener } from '@angular/core'
+import { FormControl } from '@angular/forms'
+import { MenuService } from './menu.service'
+import { Observable } from 'rxjs/Rx'
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
-  providers: [MenuService]
+  providers: [MenuService],
+  animations: [
+    trigger('dropDown', [
+      transition(':enter', [
+        animate(400, keyframes([
+          style({opactiy: 0, transform: 'translateY(-100%)', offset: 0}),
+          style({opacity: 1, transform: 'translateY(0)', offset: 1})
+        ]))
+      ])
+    ]),
+    trigger('flyIn', [
+      transition(':enter', [
+        animate(400, keyframes([
+          style({opacity: 0, transform: 'translateX(-100%)', offset: 0}),
+          style({opacity: 1, transform: 'translateX(15px)', offset: 0.5}),
+          style({opacity: 1, transform: 'translateX(0)', offset: 1})
+        ]))
+      ])
+    ])
+  ]
 })
 export class MenuComponent implements OnInit {
-  private show: boolean = true
-  private scrollTop: number = 0
-  constructor(private menuService: MenuService, private renderer: Renderer) {
-    this.renderer.listenGlobal('document', 'scroll', (event) => {
-      this.show = document.body.scrollTop <= this.scrollTop
-      this.scrollTop = document.body.scrollTop
-    })
-  }
+  term = new FormControl()
+  menu: MenuItem[] = []
+  store: MenuItem[] = []
+  show: boolean = true
+  scrollTop: number = 0
+  subheaderBit: boolean = false
+  
+  constructor(private menuService: MenuService) { }
 
-  private menu: MenuItem[] = []
-  private errorMessage: Error
   ngOnInit(): void {
-    this.menuService.getMenu()
-      .subscribe(
-        menu => this.menu = menu,
-        error => this.errorMessage = error)
+    this.menuService.get()
+      .subscribe(data => {
+        this.menu = this.store = data
+        setTimeout(() => {
+          this.windowResize()
+        }, 1)
+      })
+    
+    this.term.valueChanges
+      .debounceTime(400)
+      .distinctUntilChanged()
+      .subscribe(term => {
+        let store = JSON.parse(JSON.stringify(this.store))
+        this.menu = term == '' ? store : this.menuService.search(store, term)
+        setTimeout(() => {
+          this.windowResize()
+        }, 1)
+      })
   }
 
-  private term: string
-  private bit: boolean = false
-  private store: MenuItem[] = []
-  termChange(): void {
-    let filter: string = this.term ? this.term.toLocaleLowerCase() : '';
-    let titleContains: boolean, textContains: boolean
-
-    if(!this.bit && this.menu.length) {
-      this.store = JSON.parse(JSON.stringify(this.menu))
-      this.bit = true
+  @HostListener('document:scroll')
+  documentScroll(): void {
+    console.log(this.subheaderBit)
+    if(this.subheaderBit) {
+      this.subheaderBit = false
+      this.show = true
+      this.scrollTop = document.body.scrollTop
+      return
     }
-    else if(filter.length == 0) {
-      this.menu = this.store;
-    }
-    this.menu = JSON.parse(JSON.stringify(this.store))
+    this.show = document.body.scrollTop <= this.scrollTop || document.body.scrollTop == document.body.offsetTop
+    this.scrollTop = document.body.scrollTop
+  }
 
-    this.menu = this.menu.filter(x => {
-      x.store = x.store.filter(y => {
-        titleContains = y.title ? y.title.toLocaleLowerCase().indexOf(filter) != -1 : false
-        textContains = y.text ? y.text.toLocaleLowerCase().indexOf(filter) != -1 : false
-        return titleContains || textContains
-      })
-      return x.store.length >= 1
-    })
+  @HostListener('window:resize')
+  windowResize(): void {
+    let menu = document.getElementById('menu')
+    let header = document.getElementById('header')
+
+    menu.style['margin-top'] = header.offsetHeight + 'px'
   }
 
   subheaderClick(index: string): void {
     let menuItem = document.getElementById(index)
-    let menu = document.getElementById('menu')
-    menu.scrollTo(0, menuItem.offsetTop)
+    let header = document.getElementById('header')
+    this.subheaderBit = true
 
-    
+    // Todo: smooth scrolling
+    document.body.scrollTop = menuItem.offsetTop - header.offsetHeight
   }
 }
 

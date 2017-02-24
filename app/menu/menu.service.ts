@@ -4,18 +4,19 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class MenuService {
-  constructor(private http: Http) { }
-  
   private menuUrl: string = 'assets/menu.json'
-  public getMenu() {
+
+  constructor(private http: Http) { }
+
+  public get() {
     return this.http.get(this.menuUrl)
                     .map(this.extractData)
-                    .catch(this.handleError);
+                    .catch(this.handleError)
   }
 
-  private extractData(res: Response): MenuItem[] {
-    let body = res.json();
-    return body.data || [];
+  private extractData(res: Response) {
+    let body = res.json()
+    return body.data || []
   }
 
   private handleError(error: any) {
@@ -23,6 +24,20 @@ export class MenuService {
       error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     console.error(errMsg);
     return Observable.throw(errMsg);
+  }
+
+  public search(menu: MenuItem[], term: string) {
+    let filter: string = term ? term.toLocaleLowerCase() : '';
+    let titleContains: boolean, textContains: boolean
+
+    return menu.filter(x => {
+      x.store = x.store.filter(y => {
+        titleContains = y.title.toLocaleLowerCase().indexOf(filter) != -1
+        textContains = y.text.toLocaleLowerCase().indexOf(filter) != -1
+        return titleContains || textContains
+      })
+      return x.store.length >= 1
+    })
   }
 }
 

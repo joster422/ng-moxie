@@ -450,6 +450,7 @@
                 },
                 {
                     "title": "Café Con Leche & Buttered Cuban Toast",
+                    "text": "Great way to start the day",
                     "cost": "2.99"
                 }
             ]
@@ -534,8 +535,8 @@
                 },
                 {
                     "title": "Sausage Gravee & Biskits",
-                    "text": "Half OR Full Order",
-                    "cost": "2.59 / 3.59"
+                    "text": "Tasty gravy on fluffy biscuits",
+                    "cost": "3.59"
                 },
                 {
                     "title": "Loaded Oatmeal",
@@ -549,10 +550,12 @@
                 },
                 {
                     "title": "Home Fries",
+                    "text": "House seasoning on a tasty fries",
                     "cost": "1.99"
                 },
                 {
                     "title": "Tator Tots",
+                    "text": "Crispy and full of flavor",
                     "cost": "1.99"
                 }
             ]
